@@ -29,12 +29,18 @@ publish it.
 | Change a path's input or output | `live_set_io` |
 | Switch snapshot 1–8 | `live_snapshot` |
 | List stored presets, load one, save over the loaded user preset | `live_list_presets`, `live_load_preset`, `live_save_preset` |
+| Copy a whole stored preset to an `.hsp` file, or put an `.hsp` onto a user slot (no app needed) | `live_pull_preset`, `live_push_preset` |
 
 Safety:
 - Every change is read back from the unit.
 - The preset and the block are re-checked right before each write, so an edit never lands on the
   wrong preset if someone changes it on the floor.
 - Saving refuses factory presets, then reloads the preset to confirm the save took.
+- Pushing a whole preset is a dry run unless `execute` is set, and needs the slot's current name
+  (`expect_name`). It refuses factory slots, the loaded preset, and anything in
+  `HELIX_STADIUM_PROTECT` (comma-separated preset ids). The old preset is saved read-only to
+  `.helix-backups/` next to the file first, and the new one is read back byte for byte. A backup
+  `.bin` (with its `.json`) can be pushed straight back to restore.
 
 **How it was verified.** `scripts/live_sweep.py` added each of the 741 effect, amp, preamp, cab,
 IR, loop, send and return models live. It set every parameter to its minimum, maximum and default
@@ -74,8 +80,9 @@ Seven full presets built with these tools load on the unit.
 | **Trails** (delay/reverb spill-over) | Not settable. It's stored on the block (`harness.params.Trails`), so it would be a small addition. Set it in the app for now. |
 | **Input impedance ("Z", e.g. First Block)** | Not settable. It's greyed out in the app too. |
 | **Preset tempo, tap tempo, tempo sync of time-based effects** | Tempo is read but can't be changed. |
-| **Footswitches, pedals, labels, Command Center on the live unit** | File tools only. Edit the `.hsp`, then import it. |
-| **Renaming a preset or snapshot on the live unit** | File tools only. |
+| **Footswitches, pedals, labels, Command Center on the live unit** | Edit the `.hsp`, then `live_push_preset` it. |
+| **Whole-preset push/pull of some presets** | Refused rather than guessed: split paths, two-model blocks, a harness parameter on a controller, LED colors other than auto/red/white, Stomp A12/B12, a preset color other than auto, more than two commands on one switch, snapshot-switched commands, and a few controller sources not yet seen (e.g. one on 1B). Checked byte for byte against the app on 9 stored presets. |
+| **Renaming a preset or snapshot on the live unit** | Rename in the file, then `live_push_preset`. |
 | **Setlists stored on the unit** | `build_setlist` makes a file and checklist; it doesn't arrange the unit's setlists. |
 | **Global settings** (I/O levels, pedal calibration, display, MIDI channel) | Not covered. |
 | **Proxy captures, IR import** | Not covered. Both are done on the unit or in the app. |

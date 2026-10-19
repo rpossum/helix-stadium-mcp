@@ -6,13 +6,22 @@ them. Write tools are removed by HELIX_MCP_READONLY like every other write.
 """
 from __future__ import annotations
 
+import json
 import os
+import stat
+import time
+
+import msgpack
 
 from .. import live as L
+from ..codec import read_hsp
+from ..config import resolve_res_dir
+from ..controls import load_command_defs
+from ..live import convert as C
 from ..encoding import display_string, stored_value
 from ..modeldefs import load_modeldefs
 from ..util import envelope as E
-from .edit import _parse_value
+from .edit import _do_write, _parse_value
 from .read import _catalog
 
 _FIXED = {"input", "output", "split", "join", "harness", "none"}
@@ -487,3 +496,112 @@ def register(mcp, ctx) -> None:
             return E.ok({"preset_id": preset_id, "name": name},
                         summary=f"saved '{name}' (reloaded and checked)")
         return guarded(go)
+
+    # --- whole presets: pull a stored one to a file, push a file over a stored one -------
+
+    def slot_name(posi: int) -> str:
+        return f"{posi // 4 + 1}{'ABCD'[posi % 4]}"
+
+    def protected() -> set[int]:
+        raw = os.environ.get("HELIX_STADIUM_PROTECT", "")
+        return {int(x) for x in raw.replace(" ", "").split(",") if x}
+
+    def cmd_defs(prod):
+        return load_command_defs(str(resolve_res_dir(ctx._res_dir)), prod["host"]["id__"])
+
+    @mcp.tool(name="live_pull_preset")
+    def live_pull_preset(preset: int, path: str) -> dict:
+        """Copy a stored USER preset from the unit into a .hsp file (like Export in the app),
+        so the file tools can read and edit it. `preset` is an id from live_list_presets.
+        Nothing on the unit changes. An existing file is kept as .bak."""
+        cat, e = _catalog(ctx)
+        if e:
+            return e
+
+        def go():
+            with L.Unit() as u:
+                ent = u.user_entries().get(preset)
+                if ent is None:
+                    raise KeyError(f"{preset} isn't one of your user presets")
+                blob, prod = u.content(preset), u.product()
+            obj = C.to_hsp(blob, ent, prod, load_modeldefs(), cmd_defs(prod))
+            return _do_write(cat, obj, path, {"path": path, "preset_id": preset,
+                                              "name": ent["name"]},
+                             f"pulled {slot_name(ent['posi'])} '{ent['name']}' into {path}")
+        return guarded(go)
+
+    @mcp.tool(name="live_push_preset")
+    def live_push_preset(path: str, preset: int, expect_name: str = "",
+                         execute: bool = False) -> dict:
+        """Put a .hsp file onto the unit, REPLACING a stored user preset (like Import in the
+        app; the slot takes the file's name). Without `execute` it is a dry run: it shows the
+        slot, the name there now and the name coming in, and changes nothing. To write, pass
+        `execute=true` and `expect_name` = the name the slot holds now (from the dry run);
+        get the user's OK first. Refused: the preset loaded on the unit right now, factory
+        presets, ids in HELIX_STADIUM_PROTECT. Before writing, the slot's current contents
+        are saved next to the file under .helix-backups (push that .bin back to restore).
+        Verified by reading the slot back."""
+        def go():
+            if path.lower().endswith(".bin"):           # a backup made by this tool
+                with open(path, "rb") as f:
+                    blob = f.read()
+                with open(path[:-4] + ".json", encoding="utf-8") as f:
+                    side = json.load(f)
+                attrs, new_name = C.pack_attrs(side["name"], side["blck"], side["flow"]), side["name"]
+            else:
+                with open(path, "rb") as f:
+                    obj = read_hsp(f.read())
+                new_name = obj["meta"]["name"]
+            with L.Unit() as u:
+                prod = u.product()
+                if not path.lower().endswith(".bin"):
+                    blob, attrs = C.to_unit(obj, load_modeldefs(), cmd_defs(prod)), C.attrs(obj)
+                ent = u.user_entries().get(preset)
+                if ent is None:
+                    raise KeyError(f"{preset} isn't one of your user presets")
+                if preset in protected():
+                    raise ValueError(f"{slot_name(ent['posi'])} '{ent['name']}' is protected "
+                                     "(HELIX_STADIUM_PROTECT)")
+                if u.property("server.active.preset.id") == preset:
+                    raise ValueError("that preset is loaded on the unit right now; load another "
+                                     "one first so nothing unsaved is lost or saved over it")
+                cur = u.content(preset)
+                plan = {"preset_id": preset, "slot": slot_name(ent["posi"]),
+                        "current_name": ent["name"], "incoming_name": new_name,
+                        "same_content": cur == blob}
+                if not execute:
+                    return E.ok(plan, summary=f"DRY RUN: would replace {plan['slot']} "
+                                f"'{ent['name']}' with '{new_name}'; nothing written")
+                if expect_name != ent["name"]:
+                    raise ValueError(f"{plan['slot']} holds '{ent['name']}', not "
+                                     f"'{expect_name}'; nothing written")
+                backup = _backup(path, ent, cur)
+                try:
+                    u.store(preset, attrs, blob)
+                except Exception as ex:   # attrs may already have landed without the data
+                    raise ConnectionError(f"{ex}; {plan['slot']} may be half-written, "
+                                          f"restore from {backup}") from ex
+                back, after = u.content(preset), u.user_entries().get(preset)
+            sent = msgpack.unpackb(attrs)
+            if back != blob or after is None or any(after.get(k) != sent[k]
+                                                    for k in ("name", "blck", "flow")):
+                raise ValueError(f"written, but reading {plan['slot']} back didn't match; "
+                                 f"restore from {backup}")
+            return E.ok({**plan, "backup": backup},
+                        summary=f"replaced {plan['slot']} '{ent['name']}' with '{new_name}' "
+                                "(read back and checked)")
+        return guarded(go)
+
+
+def _backup(path: str, ent: dict, blob: bytes) -> str:
+    """The slot's exact bytes + what /SetContentAttrs needs to put them back; read-only."""
+    folder = os.path.join(os.path.dirname(os.path.abspath(path)), ".helix-backups")
+    os.makedirs(folder, exist_ok=True)
+    stem = os.path.join(folder, f"{ent['cid_']}-{time.strftime('%Y%m%d-%H%M%S')}")
+    with open(stem + ".bin", "xb") as f:
+        f.write(blob)
+    with open(stem + ".json", "x", encoding="utf-8") as f:
+        json.dump({k: ent[k] for k in ("name", "blck", "flow", "posi", "cid_")}, f)
+    for p in (stem + ".bin", stem + ".json"):
+        os.chmod(p, stat.S_IREAD)
+    return stem + ".bin"
