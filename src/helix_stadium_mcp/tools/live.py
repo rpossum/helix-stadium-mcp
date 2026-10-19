@@ -57,6 +57,8 @@ def register(mcp, ctx) -> None:
     def guarded(fn):
         try:
             return fn()
+        except (FileNotFoundError, PermissionError) as ex:   # a local file, not the unit
+            return E.err(E.IO_ERROR, f"file problem: {ex}")
         except (ConnectionError, OSError) as ex:
             return E.err(E.IO_ERROR, f"can't reach the unit: {ex}")
         except (KeyError, ValueError, IndexError) as ex:
@@ -595,7 +597,9 @@ def register(mcp, ctx) -> None:
 
 def _backup(path: str, ent: dict, blob: bytes) -> str:
     """The slot's exact bytes + what /SetContentAttrs needs to put them back; read-only."""
-    folder = os.path.join(os.path.dirname(os.path.abspath(path)), ".helix-backups")
+    folder = os.path.dirname(os.path.abspath(path))
+    if os.path.basename(folder) != ".helix-backups":     # restoring a backup: keep them together
+        folder = os.path.join(folder, ".helix-backups")
     os.makedirs(folder, exist_ok=True)
     stem = os.path.join(folder, f"{ent['cid_']}-{time.strftime('%Y%m%d-%H%M%S')}")
     with open(stem + ".bin", "xb") as f:
