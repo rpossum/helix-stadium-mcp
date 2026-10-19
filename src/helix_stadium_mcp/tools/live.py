@@ -11,6 +11,8 @@ import os
 import stat
 import time
 
+import msgpack
+
 from .. import live as L
 from ..codec import read_hsp
 from ..config import resolve_res_dir
@@ -574,9 +576,15 @@ def register(mcp, ctx) -> None:
                     raise ValueError(f"{plan['slot']} holds '{ent['name']}', not "
                                      f"'{expect_name}'; nothing written")
                 backup = _backup(path, ent, cur)
-                u.store(preset, attrs, blob)
+                try:
+                    u.store(preset, attrs, blob)
+                except Exception as ex:   # attrs may already have landed without the data
+                    raise ConnectionError(f"{ex}; {plan['slot']} may be half-written, "
+                                          f"restore from {backup}") from ex
                 back, after = u.content(preset), u.user_entries().get(preset)
-            if back != blob or after is None or after["name"] != new_name:
+            sent = msgpack.unpackb(attrs)
+            if back != blob or after is None or any(after.get(k) != sent[k]
+                                                    for k in ("name", "blck", "flow")):
                 raise ValueError(f"written, but reading {plan['slot']} back didn't match; "
                                  f"restore from {backup}")
             return E.ok({**plan, "backup": backup},

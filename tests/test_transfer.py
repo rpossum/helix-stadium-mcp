@@ -155,3 +155,14 @@ def test_bad_readback_is_reported(push):
     u = FakeUnit(entries(), readback=b"garbled")
     r = run(u, preset=244, expect_name="MCP Commands", execute=True)
     assert not r["ok"] and "restore from" in json.dumps(r)
+
+
+def test_failed_write_names_the_backup(push):
+    run, _ = push
+    u = FakeUnit(entries())
+
+    def boom(*a):
+        raise ConnectionError("unit said no")
+    u.store = boom
+    r = run(u, preset=244, expect_name="MCP Commands", execute=True)
+    assert not r["ok"] and "restore from" in json.dumps(r)

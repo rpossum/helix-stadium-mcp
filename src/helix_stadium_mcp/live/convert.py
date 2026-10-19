@@ -391,6 +391,8 @@ def to_hsp(blob: bytes, entry: dict, product: dict, md: dict, cdefs: dict) -> di
 
     def node(value, tid, ctype, byp):
         n = {}
+        if tid and tid not in ctrls and tid not in stid:
+            raise ValueError(f"trigger {tid} is neither a controller nor a snapshot value")
         if tid and tid in ctrls:
             n["controller"] = controller(tid, ctype)
         if tid and tid in stid:
