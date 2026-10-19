@@ -35,6 +35,12 @@ Values are the same stored units as an .hsp file (Kinky Boost Drive 7 = 0.70).
 The edit buffer's ``cg__.asnp`` is the active snapshot (0-based). All four requests were
 run against the unit and read back (2026-10-18).
 
+Capture 6 (2026-10-19), the app exporting and importing a preset:
+  /GetContentData    ,ii  [rid, cid] -> [rid, blob, 0]: the stored preset (see convert.py)
+  /SetContentAttrs   ,iib [rid, cid, msgpack {blck, colr, flow, name}] then
+  /SetContentData    ,iib [rid, cid, blob]: replace it. Each answers /status [rid, 0, 0].
+Pushed changed content to a test slot, loaded it and saw the change; restored (2026-10-19).
+
 Capture 5 (2026-10-18): input/output, replace in place, split type, FX loop and IR are all a
 plain ModelSet. A merge at p is setm(27 -> OutputNone, type 9) + setm(p -> Join, type 4) +
 {cmnd 'jono', bloc p, bblk p+14}; removing it is setm(27 -> OutputMatrix) + clrb p. Removing a
@@ -226,6 +232,34 @@ class Unit:
             if a == "/getEditBufferState":
                 return decode_blob(next(x for x in args if isinstance(x, bytes)))
         raise ConnectionError("unit did not return the current preset")
+
+    def blob(self, addr: str, *args, tags: str = "", reply: str):
+        _, a = self.call(addr, tags, *args, reply=reply)
+        b = next((x for x in a if isinstance(x, bytes)), None)
+        if b is None:
+            raise ConnectionError(f"the unit sent no data for {addr}")
+        return b
+
+    def content(self, cid: int) -> bytes:
+        """A stored preset, exactly as the unit keeps it (capture 6: the app's export)."""
+        return self.blob("/GetContentData", cid, tags="i", reply="/GetContentData")
+
+    def user_entries(self) -> dict:
+        """User presets by id: name, posi (slot 0 = 1A), blck/flow (the saved cursor)."""
+        raw = self.blob("/GetContainerContents", -2, tags="i", reply="/GetContainerContents")
+        return {e["cid_"]: e for e in _fourcc(_unpack(raw, 0)[0])
+                if isinstance(e, dict) and "cid_" in e and e.get("name")}
+
+    def product(self) -> dict:
+        """/ProductInfoGet: device id and firmware version (host.id__, host.vers)."""
+        return _fourcc(_unpack(self.blob("/ProductInfoGet", reply="/getProductInfo"), 0)[0])
+
+    def store(self, cid: int, attrs: bytes, blob: bytes):
+        """Replace a stored preset (capture 6: what the app sends on import)."""
+        for addr, b in (("/SetContentAttrs", attrs), ("/SetContentData", blob)):
+            _, st = self.call(addr, "ib", cid, b)
+            if not st or st[0] != 0:
+                raise ConnectionError(f"the unit refused {addr} (status {st})")
 
     def property(self, key: str):
         replies, _ = self.call("/PropertyValueGet", "s", key, reply="/getPropertyValue")

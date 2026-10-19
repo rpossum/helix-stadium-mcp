@@ -1,0 +1,1084 @@
+rpshnosj{
+  "meta": {
+    "color": "auto",
+    "device_id": 2490368,
+    "device_version": 335545661,
+    "info": "",
+    "name": "MCP Commands"
+  },
+  "preset": {
+    "clip": {
+      "end": 10.0,
+      "filename": "<EMPTY>",
+      "path": "USER CLIPS",
+      "start": 0.0
+    },
+    "commands": {
+      "16843009": [
+        {
+          "behavior": "latching",
+          "curve": "linear",
+          "delay": 0,
+          "goid": 0,
+          "ordinal": 0,
+          "params": {
+            "Action": {
+              "value": 0
+            },
+            "CC#": {
+              "value": 13
+            },
+            "Command": {
+              "value": 1
+            },
+            "LSB": {
+              "value": -1
+            },
+            "MIDI Ch": {
+              "value": 2
+            },
+            "MSB": {
+              "value": -1
+            },
+            "Message": {
+              "value": 0
+            },
+            "Note": {
+              "value": 0
+            },
+            "NoteOff": {
+              "value": 1
+            },
+            "PC": {
+              "value": -1
+            },
+            "Value": {
+              "value": 127
+            },
+            "Velocity": {
+              "value": 0
+            }
+          },
+          "threshold": 0.0,
+          "toggle": false,
+          "type": "MIDI"
+        },
+        {
+          "behavior": "latching",
+          "curve": "linear",
+          "delay": 0,
+          "goid": 0,
+          "ordinal": 1,
+          "params": {
+            "Action": {
+              "value": 0
+            },
+            "CC#": {
+              "value": 20
+            },
+            "Command": {
+              "value": 0
+            },
+            "LSB": {
+              "value": -1
+            },
+            "MIDI Ch": {
+              "value": 3
+            },
+            "MSB": {
+              "value": -1
+            },
+            "Message": {
+              "value": 0
+            },
+            "Note": {
+              "value": 0
+            },
+            "NoteOff": {
+              "value": 1
+            },
+            "PC": {
+              "value": -1
+            },
+            "Value": {
+              "value": 64
+            },
+            "Velocity": {
+              "value": 0
+            }
+          },
+          "threshold": 0.0,
+          "toggle": false,
+          "type": "MIDI"
+        }
+      ],
+      "16843010": [
+        {
+          "behavior": "latching",
+          "curve": "linear",
+          "delay": 0,
+          "goid": 0,
+          "ordinal": 0,
+          "params": {
+            "Action": {
+              "value": 0
+            },
+            "Command": {
+              "value": 0
+            },
+            "Preset": {
+              "value": 0
+            },
+            "Setlist": {
+              "value": 0
+            },
+            "Snapshot": {
+              "value": 0
+            }
+          },
+          "threshold": 0.0,
+          "toggle": false,
+          "type": "PresetSnapshot"
+        }
+      ],
+      "16843011": [
+        {
+          "behavior": "latching",
+          "curve": "linear",
+          "delay": 0,
+          "goid": 0,
+          "ordinal": 0,
+          "params": {
+            "Action": {
+              "value": 0
+            },
+            "Command": {
+              "value": 0
+            }
+          },
+          "threshold": 0.0,
+          "toggle": false,
+          "type": "Song"
+        }
+      ],
+      "16843012": [
+        {
+          "behavior": "latching",
+          "curve": "linear",
+          "delay": 0,
+          "goid": 0,
+          "ordinal": 0,
+          "params": {
+            "Action": {
+              "value": 0
+            },
+            "Command": {
+              "value": 0
+            }
+          },
+          "threshold": 0.0,
+          "toggle": false,
+          "type": "Looper"
+        }
+      ],
+      "16843013": [
+        {
+          "behavior": "latching",
+          "curve": "linear",
+          "delay": 0,
+          "goid": 0,
+          "ordinal": 0,
+          "params": {
+            "Action": {
+              "value": 0
+            },
+            "Command": {
+              "value": 0
+            },
+            "Level Trim": {
+              "value": 0.0
+            }
+          },
+          "threshold": 0.0,
+          "toggle": false,
+          "type": "Utility"
+        }
+      ],
+      "16843014": [
+        {
+          "behavior": "latching",
+          "curve": "linear",
+          "delay": 0,
+          "goid": 0,
+          "ordinal": 0,
+          "params": {
+            "Action": {
+              "value": 0
+            },
+            "Select": {
+              "value": 0
+            }
+          },
+          "threshold": 0.0,
+          "toggle": false,
+          "type": "ExtAmp"
+        }
+      ],
+      "16843015": [
+        {
+          "behavior": "latching",
+          "curve": "linear",
+          "delay": 0,
+          "goid": 0,
+          "ordinal": 0,
+          "params": {
+            "Action": {
+              "value": 0
+            },
+            "Keystroke": {
+              "value": 0
+            },
+            "Modifier 1": {
+              "value": 0
+            },
+            "Modifier 2": {
+              "value": 0
+            },
+            "Modifier 3": {
+              "value": 0
+            }
+          },
+          "threshold": 0.0,
+          "toggle": false,
+          "type": "HotKey"
+        }
+      ],
+      "16843266": [
+        {
+          "behavior": "momentary",
+          "curve": "linear",
+          "delay": 0,
+          "goid": 0,
+          "ordinal": 0,
+          "params": {
+            "Action": {
+              "value": 0
+            },
+            "CC#": {
+              "value": 80
+            },
+            "Command": {
+              "value": 0
+            },
+            "LSB": {
+              "value": -1
+            },
+            "MIDI Ch": {
+              "value": 1
+            },
+            "MSB": {
+              "value": -1
+            },
+            "Message": {
+              "value": 0
+            },
+            "Note": {
+              "value": 0
+            },
+            "NoteOff": {
+              "value": 1
+            },
+            "PC": {
+              "value": -1
+            },
+            "Value": {
+              "value": 0
+            },
+            "Velocity": {
+              "value": 0
+            }
+          },
+          "threshold": 0.0,
+          "toggle": false,
+          "type": "MIDI"
+        }
+      ]
+    },
+    "cursor": {
+      "flow": 0,
+      "path": 0,
+      "position": 8
+    },
+    "flow": [
+      {
+        "@enabled": {
+          "value": true
+        },
+        "b00": {
+          "@enabled": {
+            "value": true
+          },
+          "endpoint": "b13",
+          "favorite": 0,
+          "harness": {
+            "@enabled": {
+              "value": true
+            }
+          },
+          "path": 0,
+          "position": 0,
+          "slot": [
+            {
+              "@enabled": {
+                "value": true
+              },
+              "model": "P35_InputInst1",
+              "params": {
+                "Pad": {
+                  "value": 1
+                },
+                "Trim": {
+                  "value": 0.0
+                },
+                "decay": {
+                  "value": 0.10000000149011612
+                },
+                "noiseGate": {
+                  "value": false
+                },
+                "threshold": {
+                  "value": -48.0
+                }
+              },
+              "version": 0
+            }
+          ],
+          "type": "input"
+        },
+        "b01": {
+          "@enabled": {
+            "controller": {
+              "behavior": "latching",
+              "bypassed": false,
+              "curve": "linear",
+              "delay": 0,
+              "goid": 0,
+              "max": true,
+              "midisource": 0,
+              "min": false,
+              "source": 16843008,
+              "threshold": 0.0,
+              "type": "targetbypass"
+            },
+            "snapshots": [
+              true,
+              true,
+              true,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "value": true
+          },
+          "favorite": 0,
+          "harness": {
+            "@enabled": {
+              "value": true
+            },
+            "params": {
+              "CpuMonitor": {
+                "value": false
+              },
+              "EvtIdx": {
+                "value": -1
+              },
+              "bypass": {
+                "value": false
+              },
+              "upper": {
+                "value": true
+              }
+            }
+          },
+          "path": 0,
+          "position": 1,
+          "slot": [
+            {
+              "@enabled": {
+                "value": true
+              },
+              "model": "HD2_DistKinkyBoostMono",
+              "params": {
+                "Boost": {
+                  "value": false
+                },
+                "Bright": {
+                  "value": false
+                },
+                "Drive": {
+                  "value": 0.7
+                }
+              },
+              "version": 0
+            }
+          ],
+          "type": "fx"
+        },
+        "b02": {
+          "@enabled": {
+            "value": true
+          },
+          "favorite": 0,
+          "harness": {
+            "@enabled": {
+              "value": true
+            },
+            "params": {
+              "CpuMonitor": {
+                "value": false
+              },
+              "EvtIdx": {
+                "value": -1
+              },
+              "bypass": {
+                "value": false
+              },
+              "upper": {
+                "value": true
+              }
+            }
+          },
+          "path": 0,
+          "position": 2,
+          "slot": [
+            {
+              "@enabled": {
+                "value": true
+              },
+              "model": "Agoura_AmpUSDoubleBlack",
+              "params": {
+                "AmpCabPeak2Fc": {
+                  "value": 1000.0
+                },
+                "AmpCabPeak2G": {
+                  "value": 0.0
+                },
+                "AmpCabPeak2Q": {
+                  "value": 0.7070000171661377
+                },
+                "AmpCabPeakFc": {
+                  "value": 100.0
+                },
+                "AmpCabPeakG": {
+                  "value": 0.0
+                },
+                "AmpCabPeakQ": {
+                  "value": 0.7070000171661377
+                },
+                "AmpCabShelfF": {
+                  "value": 1000.0
+                },
+                "AmpCabShelfG": {
+                  "value": 0.0
+                },
+                "AmpCabZFir": {
+                  "value": 0
+                },
+                "AmpCabZUpdate": {
+                  "value": 0
+                },
+                "Bass": {
+                  "value": 0.32
+                },
+                "Bright": {
+                  "value": 0
+                },
+                "CabIdx": {
+                  "value": -1
+                },
+                "Channel": {
+                  "value": 1
+                },
+                "Drive": {
+                  "value": 0.3700000047683716
+                },
+                "Hype": {
+                  "value": 0.0
+                },
+                "Level": {
+                  "value": -10.0
+                },
+                "MasterVol": {
+                  "value": 1.0
+                },
+                "Mid": {
+                  "value": 0.44999998807907104
+                },
+                "Ripple": {
+                  "value": 0.0
+                },
+                "Sag": {
+                  "value": 0.0
+                },
+                "Treble": {
+                  "value": 0.5
+                },
+                "VibBass": {
+                  "value": 0.7099999785423279
+                },
+                "VibBright": {
+                  "value": 0
+                },
+                "VibMid": {
+                  "value": 0.800000011920929
+                },
+                "VibTreb": {
+                  "value": 0.41999998688697815
+                },
+                "VibratoVolume": {
+                  "value": 0.3199999928474426
+                },
+                "ZPrePost": {
+                  "value": 0.33000001311302185
+                }
+              },
+              "version": 0
+            }
+          ],
+          "type": "amp"
+        },
+        "b03": {
+          "@enabled": {
+            "value": true
+          },
+          "favorite": 0,
+          "harness": {
+            "@enabled": {
+              "value": true
+            },
+            "params": {
+              "CpuMonitor": {
+                "value": false
+              },
+              "EvtIdx": {
+                "value": -1
+              },
+              "bypass": {
+                "value": false
+              },
+              "dual": {
+                "value": true
+              },
+              "upper": {
+                "value": true
+              }
+            }
+          },
+          "path": 0,
+          "position": 3,
+          "slot": [
+            {
+              "@enabled": {
+                "value": true
+              },
+              "model": "HD2_CabMicIr_2x12DoubleC12NWithPan",
+              "params": {
+                "Angle": {
+                  "value": 0.0
+                },
+                "Delay": {
+                  "value": 0.0
+                },
+                "Distance": {
+                  "value": 1.0
+                },
+                "HighCut": {
+                  "value": 8000.0
+                },
+                "IrData": {
+                  "value": 0
+                },
+                "Level": {
+                  "value": 0.0
+                },
+                "LowCut": {
+                  "value": 80.0
+                },
+                "Mic": {
+                  "value": 5
+                },
+                "Pan": {
+                  "value": 0.5
+                },
+                "Position": {
+                  "value": 0.1599999964237213
+                }
+              },
+              "version": 0
+            }
+          ],
+          "type": "cab"
+        },
+        "b04": {
+          "@enabled": {
+            "value": false
+          },
+          "favorite": 0,
+          "harness": {
+            "@enabled": {
+              "value": true
+            },
+            "params": {
+              "CpuMonitor": {
+                "value": false
+              },
+              "EvtIdx": {
+                "value": -1
+              },
+              "bypass": {
+                "value": false
+              },
+              "upper": {
+                "value": true
+              }
+            }
+          },
+          "path": 0,
+          "position": 4,
+          "slot": [
+            {
+              "@enabled": {
+                "value": true
+              },
+              "model": "HD2_TremoloOpticalTremMono",
+              "params": {
+                "Intensity": {
+                  "value": 0.6700000166893005
+                },
+                "Level": {
+                  "value": 0.0
+                },
+                "Speed": {
+                  "value": 0.6600000262260437
+                },
+                "SyncSelect1": {
+                  "value": 6
+                },
+                "TempoSync1": {
+                  "value": false
+                }
+              },
+              "version": 0
+            }
+          ],
+          "type": "fx"
+        },
+        "b05": {
+          "@enabled": {
+            "value": true
+          },
+          "favorite": 0,
+          "harness": {
+            "@enabled": {
+              "value": true
+            },
+            "params": {
+              "CpuMonitor": {
+                "value": false
+              },
+              "EvtIdx": {
+                "value": -1
+              },
+              "Trails": {
+                "value": false
+              },
+              "bypass": {
+                "value": false
+              },
+              "upper": {
+                "value": true
+              }
+            }
+          },
+          "path": 0,
+          "position": 5,
+          "slot": [
+            {
+              "@enabled": {
+                "value": true
+              },
+              "model": "HD2_DelaySimpleDelayMono",
+              "params": {
+                "Feedback": {
+                  "value": 0.3499999940395355
+                },
+                "Level": {
+                  "snapshots": [
+                    0.0,
+                    0.0,
+                    3.0,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                  ],
+                  "value": 0.0
+                },
+                "Mix": {
+                  "controller": {
+                    "behavior": "continuous",
+                    "bypassed": true,
+                    "curve": "linear",
+                    "delay": 0,
+                    "goid": 0,
+                    "max": 0.6,
+                    "midisource": 0,
+                    "min": 0.0,
+                    "source": 16908544,
+                    "threshold": 0.0,
+                    "type": "param"
+                  },
+                  "value": 0.0
+                },
+                "SyncSelect1": {
+                  "value": 6
+                },
+                "TempoSync1": {
+                  "value": false
+                },
+                "Time": {
+                  "value": 0.6000000238418579
+                }
+              },
+              "version": 0
+            }
+          ],
+          "type": "fx"
+        },
+        "b13": {
+          "@enabled": {
+            "value": true
+          },
+          "endpoint": "b00",
+          "favorite": 0,
+          "harness": {
+            "@enabled": {
+              "value": true
+            }
+          },
+          "path": 0,
+          "position": 13,
+          "slot": [
+            {
+              "@enabled": {
+                "value": true
+              },
+              "model": "P35_OutputMatrix",
+              "params": {
+                "gain": {
+                  "value": 0.0
+                },
+                "pan": {
+                  "value": 0.5
+                }
+              },
+              "version": 0
+            }
+          ],
+          "type": "output"
+        }
+      },
+      {
+        "@enabled": {
+          "value": true
+        },
+        "b00": {
+          "@enabled": {
+            "value": true
+          },
+          "endpoint": "b13",
+          "favorite": 0,
+          "harness": {
+            "@enabled": {
+              "value": true
+            }
+          },
+          "path": 0,
+          "position": 0,
+          "slot": [
+            {
+              "@enabled": {
+                "value": true
+              },
+              "model": "P35_InputNone",
+              "params": {
+                "Trim": {
+                  "value": 0.0
+                },
+                "decay": {
+                  "value": 0.10000000149011612
+                },
+                "noiseGate": {
+                  "value": false
+                },
+                "threshold": {
+                  "value": -48.0
+                }
+              },
+              "version": 0
+            }
+          ],
+          "type": "input"
+        },
+        "b13": {
+          "@enabled": {
+            "value": true
+          },
+          "endpoint": "b00",
+          "favorite": 0,
+          "harness": {
+            "@enabled": {
+              "value": true
+            }
+          },
+          "path": 0,
+          "position": 13,
+          "slot": [
+            {
+              "@enabled": {
+                "value": true
+              },
+              "model": "P35_OutputMatrix",
+              "params": {
+                "gain": {
+                  "value": 0.0
+                },
+                "pan": {
+                  "value": 0.5
+                }
+              },
+              "version": 0
+            }
+          ],
+          "type": "output"
+        }
+      }
+    ],
+    "params": {
+      "activeexpsw": 1,
+      "activesnapshot": 0,
+      "inst1Z": "FirstEnabled",
+      "inst2Z": "FirstEnabled",
+      "tempo": 120.0
+    },
+    "snapshots": [
+      {
+        "color": "auto",
+        "expsw": 1,
+        "name": "Clean",
+        "source": 0,
+        "tempo": 120.0,
+        "valid": true
+      },
+      {
+        "color": "auto",
+        "expsw": 1,
+        "name": "Crunch",
+        "source": 0,
+        "tempo": 120.0,
+        "valid": true
+      },
+      {
+        "color": "auto",
+        "expsw": 1,
+        "name": "Lead",
+        "source": 0,
+        "tempo": 120.0,
+        "valid": true
+      },
+      {
+        "color": "auto",
+        "expsw": -1,
+        "name": "SNAPSHOT 4",
+        "source": 0,
+        "tempo": 120.0,
+        "valid": false
+      },
+      {
+        "color": "auto",
+        "expsw": -1,
+        "name": "SNAPSHOT 5",
+        "source": 0,
+        "tempo": 120.0,
+        "valid": false
+      },
+      {
+        "color": "auto",
+        "expsw": -1,
+        "name": "SNAPSHOT 6",
+        "source": 0,
+        "tempo": 120.0,
+        "valid": false
+      },
+      {
+        "color": "auto",
+        "expsw": -1,
+        "name": "SNAPSHOT 7",
+        "source": 0,
+        "tempo": 120.0,
+        "valid": false
+      },
+      {
+        "color": "auto",
+        "expsw": -1,
+        "name": "SNAPSHOT 8",
+        "source": 0,
+        "tempo": 120.0,
+        "valid": false
+      }
+    ],
+    "sources": {
+      "16843008": {
+        "bypass": false,
+        "fs_color": "red",
+        "fs_label": "BOOST",
+        "fs_topidx": 0
+      },
+      "16843009": {
+        "bypass": false,
+        "fs_color": "auto",
+        "fs_label": "",
+        "fs_topidx": 0
+      },
+      "16843010": {
+        "bypass": false,
+        "fs_color": "auto",
+        "fs_label": "",
+        "fs_topidx": 0
+      },
+      "16843011": {
+        "bypass": false,
+        "fs_color": "auto",
+        "fs_label": "",
+        "fs_topidx": 0
+      },
+      "16843012": {
+        "bypass": false,
+        "fs_color": "auto",
+        "fs_label": "",
+        "fs_topidx": 0
+      },
+      "16843013": {
+        "bypass": false,
+        "fs_color": "auto",
+        "fs_label": "",
+        "fs_topidx": 0
+      },
+      "16843014": {
+        "bypass": false,
+        "fs_color": "auto",
+        "fs_label": "",
+        "fs_topidx": 0
+      },
+      "16843015": {
+        "bypass": false,
+        "fs_color": "auto",
+        "fs_label": "",
+        "fs_topidx": 0
+      },
+      "16843016": {
+        "fs_color": "auto",
+        "fs_label": "",
+        "fs_topidx": 0
+      },
+      "16843017": {
+        "fs_color": "auto",
+        "fs_label": "",
+        "fs_topidx": 0
+      },
+      "16843018": {
+        "fs_color": "auto",
+        "fs_label": "",
+        "fs_topidx": 0
+      },
+      "16843019": {
+        "fs_color": "auto",
+        "fs_label": "",
+        "fs_topidx": 0
+      },
+      "16843264": {
+        "fs_color": "auto",
+        "fs_label": "",
+        "fs_topidx": 0
+      },
+      "16843265": {
+        "fs_color": "auto",
+        "fs_label": "",
+        "fs_topidx": 0
+      },
+      "16843266": {
+        "bypass": false,
+        "fs_color": "auto",
+        "fs_label": "",
+        "fs_topidx": 0
+      },
+      "16843267": {
+        "fs_color": "auto",
+        "fs_label": "",
+        "fs_topidx": 0
+      },
+      "16843268": {
+        "fs_color": "auto",
+        "fs_label": "",
+        "fs_topidx": 0
+      },
+      "16843269": {
+        "fs_color": "auto",
+        "fs_label": "",
+        "fs_topidx": 0
+      },
+      "16843270": {
+        "fs_color": "auto",
+        "fs_label": "",
+        "fs_topidx": 0
+      },
+      "16843271": {
+        "fs_color": "auto",
+        "fs_label": "",
+        "fs_topidx": 0
+      },
+      "16843272": {
+        "fs_color": "auto",
+        "fs_label": "",
+        "fs_topidx": 0
+      },
+      "16843273": {
+        "fs_color": "auto",
+        "fs_label": "",
+        "fs_topidx": 0
+      },
+      "16843274": {
+        "fs_color": "auto",
+        "fs_label": "",
+        "fs_topidx": 0
+      },
+      "16843275": {
+        "fs_color": "auto",
+        "fs_label": "",
+        "fs_topidx": 0
+      },
+      "16908544": {
+        "bypass": false
+      }
+    },
+    "xyctrl": {
+      "rbtime": 0.5,
+      "rubberband": 1,
+      "x": 0,
+      "y": 0
+    }
+  }
+}
