@@ -166,3 +166,17 @@ def test_failed_write_names_the_backup(push):
     u.store = boom
     r = run(u, preset=244, expect_name="MCP Commands", execute=True)
     assert not r["ok"] and "restore from" in json.dumps(r)
+
+
+@pytest.mark.install
+def test_unit_saved_order_is_handled():
+    # a preset saved on the unit itself lists snapshots (and everything else) in reverse
+    from helix_stadium_mcp.config import resolve_res_dir
+    from helix_stadium_mcp.controls import load_command_defs
+    from helix_stadium_mcp.modeldefs import load_modeldefs
+    md, cd = load_modeldefs(), load_command_defs(str(resolve_res_dir()), 0x00260000)
+    d = C.unpack(BIN)
+    e = d["cg__"]["entt"]
+    for k in ("snps", "srcs", "ctrl"):
+        e[k] = e[k][::-1]
+    assert write_hsp(C.to_hsp(C.pack(d), ENTRY, PRODUCT, md, cd)) == HSP

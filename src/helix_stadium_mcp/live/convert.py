@@ -365,7 +365,7 @@ def to_hsp(blob: bytes, entry: dict, product: dict, md: dict, cdefs: dict) -> di
     srcs = {s["id__"]: s for s in e["srcs"]}
     ctrls = {c["tid_"]: c for c in e["ctrl"]}
     stid = e["ctm_"]["stid"]
-    snaps = e["snps"]
+    snaps = sorted(e["snps"], key=lambda s: s["si__"])   # a preset saved on the unit lists them reversed
 
     def snapvals(tid, byp):
         out = []
