@@ -62,7 +62,7 @@ def register(mcp, ctx) -> None:
     @mcp.tool(name="assign_expression")
     def assign_expression(path: str, block: str, param: str, pedal: str, min: str, max: str,
                           path_num: int = 1, save_as: str | None = None) -> dict:
-        """Sweep a block parameter with an expression pedal: `pedal` is EXP1 or EXP2, `min`
+        """Sweep a block parameter with an expression pedal: `pedal` is EXP1 or EXP2 (the built-in pedal) or EXPA-EXPD (pedals in the jacks), `min`
         (heel) and `max` (toe) in display units, e.g. `10` and `60` for 10 %..60 %."""
         def fn(obj, cat):
             lo = stored(cat, obj, path_num, block, param, min)

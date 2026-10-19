@@ -28,13 +28,16 @@ from ..preset import _ensure_snapshot_array, find_block
 _PAGE_A, _PAGE_B = 0x01010100, 0x01010200
 EXP1, EXP2 = 0x01020100, 0x01020101
 TOE = 0x01010500
+# External pedal jacks (Control Port "Exp Pedal A-D"; jack A/B on top, C/D below). PROVEN for A
+# and C by a 1B export, 2026-10-19; B and D INFERRED from the sequence.
+EXPA, EXPB, EXPC, EXPD = 0x02020100, 0x02020101, 0x02020102, 0x02020103
 
 SWITCHES: dict[str, int] = {
     **{f"A{i + 1}": _PAGE_A + i for i in range(12)},
     **{f"B{i + 1}": _PAGE_B + i for i in range(12)},
     "TOE": TOE,
 }
-PEDALS = {"EXP1": EXP1, "EXP2": EXP2}
+PEDALS = {"EXP1": EXP1, "EXP2": EXP2, "EXPA": EXPA, "EXPB": EXPB, "EXPC": EXPC, "EXPD": EXPD}
 
 # footswitch LED colors. PROVEN: red (08), dkorange/ltorange/white (16), none = OFF (17),
 # green/turquoise/blue (18), yellow/purple/pink (19): every swatch in the unit's picker.
@@ -62,7 +65,7 @@ def switch_id(name: str) -> int:
 def pedal_id(name: str) -> int:
     sid = PEDALS.get(_norm(name))
     if sid is None:
-        raise KeyError(f"unknown expression pedal {name!r}; use EXP1 or EXP2")
+        raise KeyError(f"unknown expression pedal {name!r}; use EXP1, EXP2 or EXPA-EXPD")
     return sid
 
 
@@ -127,7 +130,7 @@ def assign_switch(obj: dict, path_num: int, block, switch: str, target: str = "b
 
 
 def assign_pedal(obj: dict, path_num: int, block, param: str, pedal: str, lo, hi) -> int:
-    """Sweep a param between ``lo`` and ``hi`` (stored units) from EXP 1 / EXP 2. PROVEN."""
+    """Sweep a param between ``lo`` and ``hi`` (stored units) from EXP 1 / EXP 2 / EXP A-D. PROVEN."""
     sid = pedal_id(pedal)
     _blk, pv = _holder(obj, path_num, block, param)
     # the unit writes bypassed: true on new pedal assignments and parks the value at min

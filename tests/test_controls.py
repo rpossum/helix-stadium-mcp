@@ -243,3 +243,9 @@ def test_replay_commands_match_unit():
     C.clear_commands(before, "A1")
     C.add_command(before, defs, "A1", "PresetSnapshot", {"Command": 2})
     assert _strip_noise(before) == _strip_noise(after15)
+
+
+def test_external_pedals():
+    # source ids from a 1B export with Exp Pedal A and C assigned in the app (2026-10-19)
+    assert C.pedal_id("EXP A") == 33685760 and C.pedal_id("exp c") == 33685762
+    assert C.control_name(33685762) == "EXPC"
