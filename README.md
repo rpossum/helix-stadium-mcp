@@ -146,6 +146,8 @@ input; `live_set_io` says so rather than pretending.
 
 Every write tool goes through the safety gate above; set `HELIX_MCP_READONLY` to leave them out.
 
+This fork's additions, and the settings it doesn't cover yet, are listed in [docs/FORK.md](docs/FORK.md).
+
 ## Roadmap
 
 Pre-1.0, following [semantic versioning](https://semver.org) — the tool surface can still change
